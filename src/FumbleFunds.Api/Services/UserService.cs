@@ -11,29 +11,29 @@ namespace FumbleFunds.Api.Services
         {
             _userRepository = userRepository;
         }
-        public Task<bool> CreateUserAsync(Match match)
+        public Task<bool> CreateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            return _userRepository.CreateUserAsync(user);
         }
 
-        public Task<bool> DeleteUserAsync(int matchId)
+        public Task<bool> DeleteUserAsync(int userId)
         {
-            throw new NotImplementedException();
+            return _userRepository.DeleteUserAsync(userId);
         }
 
-        public Task<IEnumerable<Match>> GetAllUsersAsync()
+        public Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            return _userRepository.GetAllUsersAsync();
         }
 
-        public Task<Match?> GetUserByIdAsync(int matchId)
+        public Task<User?> GetUserByIdAsync(int userId)
         {
-            return _userRepository.GetUserByIdAsync(matchId);
+            return _userRepository.GetUserByIdAsync(userId);
         }
 
-        public Task<bool> UpdateUserAsync(Match match)
+        public Task<bool> UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            return _userRepository.UpdateUserAsync(user);
         }
     }
 }

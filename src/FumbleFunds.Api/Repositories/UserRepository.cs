@@ -11,26 +11,41 @@ namespace FumbleFunds.Api.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<Match>> GetAllUsersAsync()
+        public Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_context.Users.AsEnumerable());
         }
-        public Task<Match?> GetUserByIdAsync(int matchId)
+        public Task<User?> GetUserByIdAsync(int userId)
         {
-            return _context.Matches.FindAsync(matchId).AsTask();
+            return _context.Users.FindAsync(userId).AsTask();
         }
 
-        public Task<bool> CreateUserAsync(Match match)
+        public Task<bool> CreateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            return Task.FromResult(_context.SaveChanges() > 0);
         }
-        public Task<bool> UpdateUserAsync(Match match)
+        public Task<bool> UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            var existingUser= _context.Users.Find(user.Id);
+            if (existingUser == null)
+            {
+                return Task.FromResult(false);
+            }
+            existingUser.Username = user.Username;
+            existingUser.Email = user.Email;
+            existingUser.PasswordHash = user.PasswordHash;
+            return Task.FromResult(_context.SaveChanges() > 0);
         }
-        public Task<bool> DeleteUserAsync(int matchId)
+        public Task<bool> DeleteUserAsync(int userId)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                return Task.FromResult(false);
+            }
+            _context.Users.Remove(user);
+            return Task.FromResult(_context.SaveChanges() > 0);
         }
     }
 }
