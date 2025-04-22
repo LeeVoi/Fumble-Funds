@@ -28,7 +28,7 @@ namespace FumbleFunds.Api.Services
 
         public Task<Match?> GetUserByIdAsync(int matchId)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetUserByIdAsync(matchId);
         }
 
         public Task<bool> UpdateUserAsync(Match match)

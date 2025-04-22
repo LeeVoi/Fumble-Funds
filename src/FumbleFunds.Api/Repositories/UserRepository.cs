@@ -17,7 +17,7 @@ namespace FumbleFunds.Api.Repositories
         }
         public Task<Match?> GetUserByIdAsync(int matchId)
         {
-            throw new NotImplementedException();
+            return _context.Matches.FindAsync(matchId).AsTask();
         }
 
         public Task<bool> CreateUserAsync(Match match)
