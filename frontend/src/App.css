@@ -52,7 +52,8 @@
   background-color: var(--grey-green);
   cursor: pointer;
   margin-left: auto;
-  padding: 1em;
+  margin-right: 1em;
+  height: 100%;
 }
 
 .navbar-button:hover {
