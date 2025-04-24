@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using FumbleFunds.Api.Repositories.Interfaces;
 
 namespace FumbleFunds.Api.Repositories
@@ -11,31 +12,53 @@ namespace FumbleFunds.Api.Repositories
         {
             _context = context;
         }
-
-
-        public Task<bool> CreateBetAsync(Bet bet)
+        public async Task<IEnumerable<Bet>> GetAllBetsByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteBetAsync(int betId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Bet>> GetAllBetsByUserIdAsync(int userId)
-        {
-            throw new NotImplementedException();
+            return await _context.Bets
+                .Where(b => b.UserId == userId)
+                .Include(b => b.User)
+                .Include(b => b.Match)
+                .ToListAsync();
         }
 
         public Task<Bet?> GetBetByIdAsync(int betId)
         {
-            throw new NotImplementedException();
+            return _context.Bets
+        .Include(b => b.User)
+        .Include(b => b.Match)
+        .FirstOrDefaultAsync(b => b.Id == betId);
         }
 
+        public async Task<Bet> CreateBetAsync(Bet bet)
+        {
+            _context.Bets.Add(bet);
+            await _context.SaveChangesAsync();
+            return bet;
+        }
         public Task<bool> UpdateBetAsync(Bet bet)
         {
-            throw new NotImplementedException();
+            var existing = _context.Bets.Find(bet.Id);
+            if (existing == null)
+                return Task.FromResult(false);
+
+            existing.UserId = bet.UserId;
+            existing.MatchId = bet.MatchId;
+            existing.Amount = bet.Amount;
+            existing.PredictedOutcome = bet.PredictedOutcome;
+            existing.PlacedAt = bet.PlacedAt;
+
+            var updated = _context.SaveChanges() > 0;
+            return Task.FromResult(updated);
+        }
+        public Task<bool> DeleteBetAsync(int betId)
+        {
+            var bet = _context.Bets.Find(betId);
+            if (bet == null)
+                return Task.FromResult(false);
+
+            _context.Bets.Remove(bet);
+            var deleted = _context.SaveChanges() > 0;
+            return Task.FromResult(deleted);
         }
     }
 }

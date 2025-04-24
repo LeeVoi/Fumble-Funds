@@ -69,16 +69,17 @@ namespace FumbleFunds.Api.Controllers
         public async Task<IActionResult> CreateUserAsync([FromBody] User user)
         {
             if (user == null)
-            {
                 return BadRequest("User cannot be null.");
-            }
 
-            var result = await _userService.CreateUserAsync(user);
-            if (!result)
-            {
-                return BadRequest("Failed to create user.");
-            }
-            return CreatedAtAction(nameof(GetUserByIdAsync), new { userId = user.Id }, user);
+            var created = await _userService.CreateUserAsync(user);
+            if (created == null)
+                return BadRequest("Could not create user.");
+
+            return CreatedAtAction(
+                nameof(GetUserByIdAsync),
+                new { userId = created.Id },
+                created
+            );
         }
     }
 }

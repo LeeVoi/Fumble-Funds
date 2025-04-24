@@ -1,7 +1,8 @@
 using FumbleFunds.Api.Repositories.Interfaces;
 using FumbleFunds.Api.Services.Interfaces;
 
-namespace FumbleFunds.Api.Services{
+namespace FumbleFunds.Api.Services
+{
 
     public class BetService : IBetService
     {
@@ -11,30 +12,27 @@ namespace FumbleFunds.Api.Services{
         {
             _betRepository = betRepository;
         }
-        
-        public Task<bool> CreateBetAsync(Bet bet)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteBetAsync(int betId)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<Bet>> GetAllBetsByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            return _betRepository.GetAllBetsByUserIdAsync(userId);
         }
 
         public Task<Bet?> GetBetByIdAsync(int betId)
         {
-            throw new NotImplementedException();
+            return _betRepository.GetBetByIdAsync(betId);
         }
 
+        public Task<Bet> CreateBetAsync(Bet bet)
+        {
+            return _betRepository.CreateBetAsync(bet);
+        }
         public Task<bool> UpdateBetAsync(Bet bet)
         {
-            throw new NotImplementedException();
+            return _betRepository.UpdateBetAsync(bet);
+        }
+        public Task<bool> DeleteBetAsync(int betId)
+        {
+            return _betRepository.DeleteBetAsync(betId);
         }
     }
 }

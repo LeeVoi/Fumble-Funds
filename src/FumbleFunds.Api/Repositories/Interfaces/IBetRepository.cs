@@ -5,7 +5,7 @@ namespace FumbleFunds.Api.Repositories.Interfaces
     {
         Task<IEnumerable<Bet>> GetAllBetsByUserIdAsync(int userId);
         Task<Bet?> GetBetByIdAsync(int betId);
-        Task<bool> CreateBetAsync(Bet bet);
+        Task<Bet> CreateBetAsync(Bet bet);
         Task<bool> UpdateBetAsync(Bet bet);
         Task<bool> DeleteBetAsync(int betId);
     }

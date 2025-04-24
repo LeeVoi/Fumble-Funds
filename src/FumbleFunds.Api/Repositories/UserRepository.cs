@@ -20,10 +20,11 @@ namespace FumbleFunds.Api.Repositories
             return _context.Users.FindAsync(userId).AsTask();
         }
 
-        public Task<bool> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(User user)
         {
             _context.Users.Add(user);
-            return Task.FromResult(_context.SaveChanges() > 0);
+            await _context.SaveChangesAsync();
+            return user;
         }
         public Task<bool> UpdateUserAsync(User user)
         {

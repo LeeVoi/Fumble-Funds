@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using FumbleFunds.Api.Repositories.Interfaces;
 
 namespace FumbleFunds.Api.Repositories
@@ -12,27 +13,47 @@ namespace FumbleFunds.Api.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<Match>> GetAllMatchesAsync()
+        public async Task<IEnumerable<Match>> GetAllMatchesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Matches
+                     .Include(m => m.Bets)
+                     .ToListAsync();
         }
 
-        public Task<Match?> GetMatchByIdAsync(int matchId)
+        public async Task<Match?> GetMatchByIdAsync(int matchId)
         {
-            throw new NotImplementedException();
+            return await _context.Matches
+                     .Include(m => m.Bets)
+                     .FirstOrDefaultAsync(m => m.Id == matchId);
         }
-        public Task<bool> CreateMatchAsync(Match match)
+        public async Task<Match> CreateMatchAsync(Match match)
         {
-            throw new NotImplementedException();
+            _context.Matches.Add(match);
+            await _context.SaveChangesAsync();
+            return match;
         }
 
-        public Task<bool> UpdateMatchAsync(Match match)
+        public async Task<bool> UpdateMatchAsync(Match match)
         {
-            throw new NotImplementedException();
+            var existing = await _context.Matches.FindAsync(match.Id);
+            if (existing == null) return false;
+
+            existing.HomeTeam = match.HomeTeam;
+            existing.AwayTeam = match.AwayTeam;
+            existing.StartTime = match.StartTime;
+            existing.HomeScore = match.HomeScore;
+            existing.AwayScore = match.AwayScore;
+            existing.Status = match.Status;
+
+            return await _context.SaveChangesAsync() > 0;
         }
-        public Task<bool> DeleteMatchAsync(int matchId)
+        public async Task<bool> DeleteMatchAsync(int matchId)
         {
-            throw new NotImplementedException();
+            var match = await _context.Matches.FindAsync(matchId);
+            if (match == null) return false;
+
+            _context.Matches.Remove(match);
+            return await _context.SaveChangesAsync() > 0;
         }
 
     }

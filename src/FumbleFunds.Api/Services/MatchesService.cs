@@ -1,7 +1,8 @@
 using FumbleFunds.Api.Repositories.Interfaces;
 using FumbleFunds.Api.Services.Interfaces;
 
-namespace FumbleFunds.Api.Services{
+namespace FumbleFunds.Api.Services
+{
 
     public class MatchesService : IMatchesService
     {
@@ -11,29 +12,26 @@ namespace FumbleFunds.Api.Services{
         {
             _matchesRepository = matchesRepository;
         }
-        public Task<bool> CreateMatchAsync(Match match)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteMatchAsync(int matchId)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<Match>> GetAllMatchesAsync()
         {
-            throw new NotImplementedException();
+            return _matchesRepository.GetAllMatchesAsync();
         }
-
         public Task<Match?> GetMatchByIdAsync(int matchId)
         {
-            throw new NotImplementedException();
+            return _matchesRepository.GetMatchByIdAsync(matchId);
         }
 
+        public Task<Match> CreateMatchAsync(Match match)
+        {
+            return _matchesRepository.CreateMatchAsync(match);
+        }
         public Task<bool> UpdateMatchAsync(Match match)
         {
-            throw new NotImplementedException();
+            return _matchesRepository.UpdateMatchAsync(match);
+        }
+        public Task<bool> DeleteMatchAsync(int matchId)
+        {
+            return _matchesRepository.DeleteMatchAsync(matchId);
         }
     }
 }

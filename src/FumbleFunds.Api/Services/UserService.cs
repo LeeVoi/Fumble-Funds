@@ -11,29 +11,27 @@ namespace FumbleFunds.Api.Services
         {
             _userRepository = userRepository;
         }
-        public Task<bool> CreateUserAsync(User user)
-        {
-            return _userRepository.CreateUserAsync(user);
-        }
-
-        public Task<bool> DeleteUserAsync(int userId)
-        {
-            return _userRepository.DeleteUserAsync(userId);
-        }
 
         public Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return _userRepository.GetAllUsersAsync();
         }
-
         public Task<User?> GetUserByIdAsync(int userId)
         {
             return _userRepository.GetUserByIdAsync(userId);
         }
 
+        public Task<User> CreateUserAsync(User user)
+        {
+            return _userRepository.CreateUserAsync(user);
+        }
         public Task<bool> UpdateUserAsync(User user)
         {
             return _userRepository.UpdateUserAsync(user);
+        }
+        public Task<bool> DeleteUserAsync(int userId)
+        {
+            return _userRepository.DeleteUserAsync(userId);
         }
     }
 }
