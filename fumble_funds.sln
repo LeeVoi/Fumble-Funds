@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fumble_funds", "fumble_funds.csproj", "{3F1A5770-0F46-039F-6DD6-190CAC323B36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fumble_funds", "src/FumbleFunds.Api/fumble_funds.csproj", "{3F1A5770-0F46-039F-6DD6-190CAC323B36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
