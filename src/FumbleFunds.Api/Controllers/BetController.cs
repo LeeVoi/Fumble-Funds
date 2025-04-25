@@ -40,11 +40,7 @@ namespace FumbleFunds.Api.Controllers
                 return BadRequest("Bet payload is required.");
 
             var created = await _betService.CreateBetAsync(bet);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = created.Id },
-                created
-            );
+            return Ok(created);
         }
 
         // PUT api/bets/5

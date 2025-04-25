@@ -7,18 +7,36 @@ namespace FumbleFunds.Api.Services
     public class MatchesService : IMatchesService
     {
         private readonly IMatchesRepository _matchesRepository;
+        private readonly IExternalMatchService _external;
 
-        public MatchesService(IMatchesRepository matchesRepository)
+        public MatchesService(IMatchesRepository matchesRepository, IExternalMatchService external)
         {
             _matchesRepository = matchesRepository;
+            _external = external;
         }
-        public Task<IEnumerable<Match>> GetAllMatchesAsync()
+        public async Task<IEnumerable<Match>> GetAllMatchesAsync()
         {
-            return _matchesRepository.GetAllMatchesAsync();
+            var live = await _external.FetchAllAsync();
+            foreach (var m in live)
+            {
+                var existing = await _matchesRepository.GetMatchByIdAsync(m.Id);
+                if (existing == null)
+                    await _matchesRepository.CreateMatchAsync(m);
+                else
+                    await _matchesRepository.UpdateMatchAsync(m);
+            }
+            return await _matchesRepository.GetAllMatchesAsync();
         }
-        public Task<Match?> GetMatchByIdAsync(int matchId)
+        public async Task<Match?> GetMatchByIdAsync(int matchId)
         {
-            return _matchesRepository.GetMatchByIdAsync(matchId);
+            var local = await _matchesRepository.GetMatchByIdAsync(matchId);
+            if (local != null) return local;
+
+            var live = await _external.FetchByIdAsync(matchId);
+            if (live == null) return null;
+
+            await _matchesRepository.CreateMatchAsync(live);
+            return live;
         }
 
         public Task<Match> CreateMatchAsync(Match match)

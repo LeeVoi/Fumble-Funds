@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace fumble_funds.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250422072412_InitialCreate")]
+    [Migration("20250425083039_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -59,10 +59,7 @@ namespace fumble_funds.Migrations
             modelBuilder.Entity("Match", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AwayScore")
                         .HasColumnType("int");

@@ -20,6 +20,17 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBetService, BetService>();
 builder.Services.AddScoped<IMatchesService, MatchesService>();
 
+builder.Services
+    .AddHttpClient<IExternalMatchService, ExternalMatchesService>(client =>
+    {
+        var cfg = builder.Configuration.GetSection("ExternalApis:FootballData");
+        client.BaseAddress = new Uri(cfg["BaseUrl"]!);
+        client.DefaultRequestHeaders.Add("X-Auth-Token", cfg["ApiKey"]!);
+    });
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -37,7 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "FumbleFunds API v1");
-        c.RoutePrefix = string.Empty; // serve UI at root (/)
+
     });
 }
 
