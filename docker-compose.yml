@@ -1,39 +1,30 @@
 services:
-  db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    env_file:
-      - .env
-    ports:
-      - "1433:1433"
-    volumes:
-      - dbdata:/var/opt/mssql
-    networks:
-      - fumblefunds-net
-
+  
   api:
     build:
       context: ./src/FumbleFunds.Api
       dockerfile: DockerFile
     container_name: fumblefunds-api
-    env_file:
-      - .env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db,1433;User Id=${SA_USER};Password=${SA_PASSWORD};Database=FumbleFundsDb;TrustServerCertificate=True;
     ports:
       - "8080:8080"
     networks:
       - fumblefunds-net
-
-    # 2) Don’t start your API until db is healthy
-    depends_on:
-      - db
-
-    # 3) If it still fails, Docker will retry starting it
     restart: on-failure
 
+  featurehub:
+    image: featurehub/party-server:latest
+    restart: always
+    volumes:
+      - featurehub-h2-data:/db
+    ports:
+      - 8085:8085
+    networks:
+      - fumblefunds-net
+
 volumes:
-  dbdata:
+  featurehub-h2-data:
 
 networks:
   fumblefunds-net:
