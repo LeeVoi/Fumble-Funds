@@ -21,6 +21,12 @@ namespace FumbleFunds.Api.Services
             return _userRepository.GetUserByIdAsync(userId);
         }
 
+        public Task<User?> GetUserByEmailAsync(string email, string password)
+        { 
+           return _userRepository.GetUserByEmailAsync(email, password);
+        }
+
+
         public Task<User> CreateUserAsync(User user)
         {
             return _userRepository.CreateUserAsync(user);
