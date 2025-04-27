@@ -39,6 +39,12 @@ namespace FumbleFunds.Api.Services
             return live;
         }
 
+        public Task<IEnumerable<Match>> GetPopularMatchesAsync(int count)
+        {
+            return _matchesRepository.GetPopularMatchesAsync(count);
+        }
+
+
         public Task<Match> CreateMatchAsync(Match match)
         {
             return _matchesRepository.CreateMatchAsync(match);

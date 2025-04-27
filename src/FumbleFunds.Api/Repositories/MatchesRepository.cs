@@ -26,6 +26,23 @@ namespace FumbleFunds.Api.Repositories
                      .Include(m => m.Bets)
                      .FirstOrDefaultAsync(m => m.Id == matchId);
         }
+        public async Task<IEnumerable<Match>> GetPopularMatchesAsync(int count)
+        {
+            return await _context.Matches
+                // project each match alongside its bet‐count
+                .Select(m => new
+                {
+                    Match = m,
+                    BetCount = _context.Bets.Count(b => b.MatchId == m.Id)
+                })
+                // order descending by the number of bets
+                .OrderByDescending(x => x.BetCount)
+                // take only the top ‘count’
+                .Take(count)
+                // select back the Match entity
+                .Select(x => x.Match)
+                .ToListAsync();
+        }
         public async Task<Match> CreateMatchAsync(Match match)
         {
             _context.Matches.Add(match);
