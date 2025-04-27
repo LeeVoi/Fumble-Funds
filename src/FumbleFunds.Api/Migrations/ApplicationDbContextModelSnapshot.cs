@@ -56,10 +56,7 @@ namespace fumble_funds.Migrations
             modelBuilder.Entity("Match", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AwayScore")
                         .HasColumnType("int");

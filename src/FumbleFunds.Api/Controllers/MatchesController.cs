@@ -40,11 +40,7 @@ namespace FumbleFunds.Api.Controllers
                 return BadRequest("Match payload is required.");
 
             var created = await _matchService.CreateMatchAsync(match);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = created.Id },
-                created
-            );
+            return Ok(created);
         }
 
                 [HttpPut("{id:int}")]

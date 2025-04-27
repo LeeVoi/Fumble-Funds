@@ -21,7 +21,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=db,1433;User Id=${SA_USER};Password=${SA_PASSWORD};Database=FumbleFundsDb;TrustServerCertificate=True;
     ports:
-      - "5000:80"
+      - "8080:8080"
     networks:
       - fumblefunds-net
 

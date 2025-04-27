@@ -16,7 +16,7 @@ namespace FumbleFunds.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {
             var user = await _userService.GetUserByIdAsync(userId);
@@ -75,11 +75,7 @@ namespace FumbleFunds.Api.Controllers
             if (created == null)
                 return BadRequest("Could not create user.");
 
-            return CreatedAtAction(
-                nameof(GetUserByIdAsync),
-                new { userId = created.Id },
-                created
-            );
+            return Ok(created);
         }
     }
 }

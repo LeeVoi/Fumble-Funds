@@ -5,6 +5,5 @@ namespace fumble_funds.Models.Enums
         Scheduled,
         Live,
         Finished,
-        Cancelled
     }
 }
