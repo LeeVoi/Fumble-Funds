@@ -15,6 +15,22 @@ namespace FumbleFunds.Api.Controllers
             _userService = userService;
         }
 
+        // POST api/user/signin
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn([FromBody] SignInDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password))
+                return BadRequest("Email and password are required.");
+
+            var user = await _userService.GetUserByEmailAsync(dto.Email, dto.Password);
+            if (user == null)
+                return NotFound("Invalid email or password.");
+
+            // This will hide the password in the response
+            user.PasswordHash = null!;
+            return Ok(user);
+        }
+
         [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {

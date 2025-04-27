@@ -55,31 +55,31 @@ namespace FumbleFunds.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateAsync([FromBody] Match match)
         {
-            if (match == null) 
+            if (match == null)
                 return BadRequest("Match payload is required.");
 
             var created = await _matchService.CreateMatchAsync(match);
             return Ok(created);
         }
 
-                [HttpPut("{id:int}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] Match match)
         {
             if (match == null || match.Id != id)
                 return BadRequest("ID mismatch or missing payload.");
 
             var updated = await _matchService.UpdateMatchAsync(match);
-            return updated 
-                ? Ok(match) 
+            return updated
+                ? Ok(match)
                 : NotFound();
         }
 
-                [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var deleted = await _matchService.DeleteMatchAsync(id);
-            return deleted 
-                ? NoContent() 
+            return deleted
+                ? NoContent()
                 : NotFound();
         }
     }

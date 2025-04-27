@@ -1,4 +1,5 @@
 using FumbleFunds.Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace FumbleFunds.Api.Repositories
 {
@@ -19,6 +20,15 @@ namespace FumbleFunds.Api.Repositories
         {
             return _context.Users.FindAsync(userId).AsTask();
         }
+        public Task<User?> GetUserByEmailAsync(string email, string password)
+        {
+            return _context.Users
+                           .AsNoTracking()
+                           .FirstOrDefaultAsync(u =>
+                               u.Email == email &&
+                               u.PasswordHash == password
+                           );
+        }
 
         public async Task<User> CreateUserAsync(User user)
         {
@@ -28,7 +38,7 @@ namespace FumbleFunds.Api.Repositories
         }
         public Task<bool> UpdateUserAsync(User user)
         {
-            var existingUser= _context.Users.Find(user.Id);
+            var existingUser = _context.Users.Find(user.Id);
             if (existingUser == null)
             {
                 return Task.FromResult(false);
