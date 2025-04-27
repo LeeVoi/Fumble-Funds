@@ -19,6 +19,7 @@ builder.Services.AddScoped<IMatchesRepository, MatchesRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBetService, BetService>();
 builder.Services.AddScoped<IMatchesService, MatchesService>();
+builder.Services.AddScoped<IFeatureService, FeatureService>();
 
 builder.Services
     .AddHttpClient<IExternalMatchService, ExternalMatchesService>(client =>

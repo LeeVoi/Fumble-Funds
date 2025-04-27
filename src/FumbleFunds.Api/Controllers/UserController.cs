@@ -1,6 +1,5 @@
 using FumbleFunds.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 
 namespace FumbleFunds.Api.Controllers

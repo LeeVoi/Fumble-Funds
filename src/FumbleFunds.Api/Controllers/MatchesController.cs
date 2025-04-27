@@ -8,9 +8,11 @@ namespace FumbleFunds.Api.Controllers
     public class MatchesController : ControllerBase
     {
         private readonly IMatchesService _matchService;
-        public MatchesController(IMatchesService matchService)
+        private readonly IFeatureService _featureService;
+        public MatchesController(IMatchesService matchService, IFeatureService featureService)
         {
             _matchService = matchService;
+            _featureService = featureService;
         }
 
 
@@ -33,7 +35,24 @@ namespace FumbleFunds.Api.Controllers
                 : Ok(match);
         }
 
-                [HttpPost]
+        [HttpGet("popular/{count:int}")]
+        public async Task<IActionResult> GetPopularAsync(int count = 10)
+        {
+            var enabled = await _featureService.GetFeatureFlagAsync("popular-matches");
+            if (!enabled)
+                return NotFound("Feature not enabled.");
+
+            if (count <= 0)
+                return BadRequest("Count must be greater than zero.");
+
+            var matches = await _matchService.GetPopularMatchesAsync(count);
+            if (matches == null || !matches.Any())
+                return NotFound("No popular matches found.");
+
+            return Ok(matches);
+        }
+
+        [HttpPost("create")]
         public async Task<IActionResult> CreateAsync([FromBody] Match match)
         {
             if (match == null) 
