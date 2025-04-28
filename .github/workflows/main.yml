@@ -1,0 +1,42 @@
+# ------------------------------------------------------------------
+# CI/CD Pipeline for Fumble Funds
+# ------------------------------------------------------------------
+
+name: CI/CD Pipeline for Fumble Funds
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  # ----------------------------------------
+  # Backend Deployment to Heroku Container
+  # ----------------------------------------
+  backend-deploy:
+    name: Build & Deploy Backend to Heroku
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME:  ${{ secrets.HEROKU_APP_NAME }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Heroku Container Registry
+        run: |
+          echo "${{ secrets.HEROKU_API_KEY }}"             | docker login --username=_ --password-stdin registry.heroku.com
+
+      - name: Build Docker image
+        run: |
+          docker build             -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web             ./src/FumbleFunds.Api
+
+      - name: Push Docker image to Heroku
+        run: |
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+
+      - name: Release image on Heroku
+        run: |
+          heroku container:release web             --app ${{ secrets.HEROKU_APP_NAME }}
