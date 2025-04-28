@@ -21,7 +21,7 @@ const PopularMatches: React.FC<PopularMatches> = ({ loggedIn, setLoggedIn, setUs
         })).catch((error) => {
             console.error("Error fetching popular matches:", error);
         });
-    }, [matches]);
+    }, []);
     return (
         <div className="container">
             <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} popularEnabled={featureEnabled}/>
