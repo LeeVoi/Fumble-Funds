@@ -1,7 +1,5 @@
-import {useEffect, useState} from "react";
 import {Match} from "../models/Match.ts";
 import {MatchStatus} from "../models/MatchStatus.ts";
-import {getMatches} from "../services/matchService.ts";
 import {useNavigate} from "react-router-dom";
 import Navbar from "./Navbar.tsx";
 import * as React from "react";
@@ -9,14 +7,14 @@ import * as React from "react";
 interface DashboardProps{
     userId: number;
     handleSetMatch: (match: Match) => void;
+    matches: Match[];
     loggedIn: boolean;
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     setUser: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
-const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, loggedIn, setLoggedIn, setUser}: DashboardProps) => {
-    const [matches, setMatches] = useState<Match[]>([]);
+const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, matches, loggedIn, setLoggedIn, setUser}: DashboardProps) => {
     const navigate = useNavigate();
     
     const handleClickBet = (match: Match) => {
@@ -25,20 +23,7 @@ const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, loggedIn, 
         navigate("createbet");
     }
     
-    useEffect(() => {
-        const fetchMatches = async () => {
-            try{
-                const data = await getMatches();
-                setMatches(data);
-            }catch (error){
-                console.error("Error fetching matches:", error);
-            }
-        }
-        console.log("Fetching matches...");
-        console.log(matches);
-        
-        fetchMatches();
-    }, []);
+    
     
     return (
         <div className="container">
