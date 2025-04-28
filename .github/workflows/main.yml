@@ -28,7 +28,10 @@ jobs:
       - name: Log in to Heroku Container Registry
         run: |
           echo "${{ secrets.HEROKU_API_KEY }}"             | docker login --username=_ --password-stdin registry.heroku.com
-
+          
+      - name: install heroku CLI
+        run: npm i -g heroku
+        
       - name: Build Docker image
         run: |
           docker build             -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web             ./src/FumbleFunds.Api
