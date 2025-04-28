@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: ./src/FumbleFunds.Api
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: fumblefunds-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
