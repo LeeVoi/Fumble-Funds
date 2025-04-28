@@ -36,6 +36,9 @@ namespace FumbleFunds.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateBetDto dto)
         {
+            if(dto.MatchId == null || dto.UserId == null)
+                return BadRequest("Match ID or User ID is required.");
+            
             var bet = new Bet
             {
                 UserId = dto.UserId,

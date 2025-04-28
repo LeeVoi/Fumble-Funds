@@ -29,7 +29,7 @@ namespace FumbleFunds.Api.Controllers
 
             // This will hide the password in the response
             user.PasswordHash = null!;
-            return Ok(user);
+            return Ok(user.Id);
         }
 
         [HttpGet("{userId:int}")]

@@ -1,23 +1,26 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
-import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import SignUp from "./pages/SignUp.tsx";
+import Dashboard from "./components/Dashboard.tsx";
+import CreateBet from "./components/CreateBet.tsx";
+import * as React from "react";
+import {Match} from "./models/Match.ts";
 
 function App() {
     const [user, setUser] = useState<number>(-1);
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [match, setMatch] = React.useState<Match>();
+
+    const handleSetMatch= (match: Match) => {
+        setMatch(match);
+    }
 
 
 
     return (
-        <Router>
             <Routes>
-                <Route
-                    path="/"
-                    element={<Home loggedIn={loggedIn} setLoggedIn={setLoggedIn} userId={user} setUser={setUser} />}
-                />
                 <Route
                     path="/login"
                     element={<Login setUser={setUser} setLoggedIn={setLoggedIn} />}
@@ -26,8 +29,9 @@ function App() {
                 path="/signup"
                 element={<SignUp setUser={setUser} setLoggedIn={setLoggedIn} />}
                 />
+                <Route path="/" element={<Dashboard userId={user} handleSetMatch={handleSetMatch} setUser={setUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} ></Dashboard>} />
+                <Route path="createbet" element={<CreateBet userId={user} match={match!} setUser={setUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>}/>
             </Routes>
-        </Router>
     );
 }
 
