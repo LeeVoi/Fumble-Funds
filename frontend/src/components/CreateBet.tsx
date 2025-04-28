@@ -24,7 +24,7 @@ const CreateBet: React.FC<CreateBetProps> = ({userId, match, loggedIn, setLogged
         const bet: BetPost = {
             userId: userId,
             matchId: match!.id,
-            amount: betAmount,
+            amount: betAmount!,
             predictedOutcome: outcome
         };
 
