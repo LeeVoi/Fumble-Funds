@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {login} from "./../services/userService.ts";
 import logo from "../assets/logo.png";
 
 
@@ -13,11 +14,10 @@ const Login: React.FC<LoginProps> = ({setUser, setLoggedIn}) => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleLoginClick = () =>{
-        console.log(email);
-        console.log(password);
+    const handleLoginClick = async () =>{
+        const response = await login(email, password);
+        setUser(response);
         setLoggedIn(true);
-        setUser(1);
         navigate("/");
     }
 
