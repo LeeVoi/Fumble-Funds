@@ -2,7 +2,7 @@ import axios from "axios";
 import {BetPost} from "../models/BetPost.ts";
 import {ReturnedBet} from "../models/ReturnedBet.ts";
 
-const API_URL = "http://localhost:8080/api/Bets"; // Replace with your API endpoint
+const API_URL = "https://fumble-funds-6f817bf2c96d.herokuapp.com/api/Bets"; // Replace with your API endpoint
 
 // Fetch matches from the API
 export const createBet = async (dto: BetPost): Promise<BetPost> => {

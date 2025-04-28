@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/User"; // Replace with your API endpoint
+const API_URL = "https://fumble-funds-6f817bf2c96d.herokuapp.com/api/User"; // Replace with your API endpoint
 
 // Fetch matches from the API
 export const login = async (email: string,  password: string): Promise<number> => {

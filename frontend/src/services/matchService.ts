@@ -1,7 +1,7 @@
 import axios from "axios";
 import {Match} from "../models/Match.ts";
 
-const API_URL = "http://localhost:8080/api"; // Replace with your API endpoint
+const API_URL = "https://fumble-funds-6f817bf2c96d.herokuapp.com/api"; // Replace with your API endpoint
 
 // Fetch matches from the API
 export const getMatches = async (): Promise<Match[]> => {
