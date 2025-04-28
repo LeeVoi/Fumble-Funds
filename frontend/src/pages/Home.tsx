@@ -1,7 +1,9 @@
 import * as React from "react";
 import Navbar from "../components/Navbar.tsx";
-import {useEffect} from "react";
 import Dashboard from "../components/Dashboard.tsx";
+import {Route, Routes} from "react-router-dom";
+import CreateBet from "../components/CreateBet.tsx";
+import {Match} from "../models/Match.ts";
 
 interface HomeProps {
     loggedIn: boolean;
@@ -11,14 +13,20 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn, userId, setUser }) => {
-
-    useEffect(() => {
-        
-    }, []);
+    const [match, setMatch] = React.useState<Match>();
+    
+    const handleSetMatch= (match: Match) => {
+        setMatch(match);
+    }
+    
     return (
-        <div className="container">
+        <div className="container">             
             <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} />
-            <Dashboard userId={userId}></Dashboard>
+            <Routes>
+                <Route path="/" element={<Dashboard userId={userId} handleSetMatch={handleSetMatch} setUser={setUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} ></Dashboard>} />
+                <Route path="createbet" element={<CreateBet userId={userId} match={match!} setUser={setUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>}/>  
+            </Routes>
+            
         </div>
     );
 };
