@@ -41,16 +41,10 @@ namespace FumbleFunds.Api.Services
 
         public Task<IEnumerable<Match>> GetPopularMatchesAsync(int count)
         {
-<<<<<<< HEAD
-            return _matchesRepository.GetAllMatchesAsync();
-        }
 
-=======
             return _matchesRepository.GetPopularMatchesAsync(count);
         }
 
-
->>>>>>> 24b4d2791f9c896a3a06efef9168c70ac7090e2e
         public Task<Match> CreateMatchAsync(Match match)
         {
             return _matchesRepository.CreateMatchAsync(match);

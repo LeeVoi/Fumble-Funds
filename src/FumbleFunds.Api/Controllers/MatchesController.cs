@@ -35,10 +35,11 @@ namespace FumbleFunds.Api.Controllers
                 : Ok(match);
         }
 
-        [HttpGet("popular/{count:int}")]
-        public async Task<IActionResult> GetPopularAsync(int count = 10)
+        [HttpGet("popular")]
+        public async Task<IActionResult> GetPopularAsync([FromQuery]int count = 10)
         {
             var enabled = await _featureService.GetFeatureFlagAsync("popular-matches");
+            
             if (!enabled)
                 return NotFound("Feature not enabled.");
 
@@ -48,6 +49,7 @@ namespace FumbleFunds.Api.Controllers
             var matches = await _matchService.GetPopularMatchesAsync(count);
             if (matches == null || !matches.Any())
                 return NotFound("No popular matches found.");
+                
 
             return Ok(matches);
         }
