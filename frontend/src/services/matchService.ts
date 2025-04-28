@@ -1,17 +1,16 @@
 import axios from "axios";
 import {Match} from "../models/Match.ts";
 
-const API_URL = "https://fumble-funds-6f817bf2c96d.herokuapp.com/api"; // Replace with your API endpoint
+const API_URL = "https://fumble-funds-6f817bf2c96d.herokuapp.com/api"; 
 
-// Fetch matches from the API
 export const getMatches = async (): Promise<Match[]> => {
     try {
-        const requestURL = `${API_URL}/Matches`; // Adjust the endpoint as needed
+        const requestURL = `${API_URL}/Matches`; 
         const response = await axios.get(requestURL);
         return response.data;
     } catch (error) {
         console.error("Error fetching matches:", error);
-        throw error; // Re-throw the error to handle it in the calling code
+        throw error; 
     }
 };
 
@@ -22,6 +21,6 @@ export const getPopularMatches = async (count: number): Promise<Match[]> => {
         return response.data;
     } catch (error) {
         console.error("Error fetching popular matches:", error);
-        throw error; // Re-throw the error to handle it in the calling code
+        throw error; 
     }
 }
