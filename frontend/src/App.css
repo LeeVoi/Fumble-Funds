@@ -6,6 +6,12 @@
   --blue: #8DDBE0;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .logo{
   margin-right: auto;
   max-height: 100%;
@@ -146,5 +152,24 @@
   padding: 0;
   cursor: pointer;
   border: none;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 5%;
+}
+
+.match-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center; /* Horizontally center text */
+}
+
+.match-table th, .match-table td {
+  padding: 10px;
+  vertical-align: middle; /* Vertically center text */
+  border: 1px solid #ddd; /* Optional: Add borders for better visibility */
 }
 

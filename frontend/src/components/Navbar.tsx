@@ -24,8 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({ loggedIn, setLoggedIn, setUser }) => {
             <img src={logo} className="logo" alt="Logo" />
             <div className="navbar-button-bar">
                 <button className="navbar-button">Dashboard</button>
-                <button className="navbar-button">Your Bets</button>
-                <button className="navbar-button">User Profile</button>
+                {loggedIn && <button className="navbar-button">Your Bets</button>}
             </div>
             <button className="navbar-login" onClick={toggleLoggedIn}>
                 {loggedIn ? "Logout" : "Login"}

@@ -15,15 +15,12 @@ namespace FumbleFunds.Api.Repositories
 
         public async Task<IEnumerable<Match>> GetAllMatchesAsync()
         {
-            return await _context.Matches
-                     .Include(m => m.Bets)
-                     .ToListAsync();
+            return await _context.Matches.ToListAsync();
         }
 
         public async Task<Match?> GetMatchByIdAsync(int matchId)
         {
             return await _context.Matches
-                     .Include(m => m.Bets)
                      .FirstOrDefaultAsync(m => m.Id == matchId);
         }
         public async Task<IEnumerable<Match>> GetPopularMatchesAsync(int count)

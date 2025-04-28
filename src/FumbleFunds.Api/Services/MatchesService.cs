@@ -1,3 +1,4 @@
+using fumble_funds.Models.Entity.DTO;
 using FumbleFunds.Api.Repositories.Interfaces;
 using FumbleFunds.Api.Services.Interfaces;
 
@@ -14,7 +15,7 @@ namespace FumbleFunds.Api.Services
             _matchesRepository = matchesRepository;
             _external = external;
         }
-        public async Task<IEnumerable<Match>> GetAllMatchesAsync()
+        public async Task<IEnumerable<ReturnedMatchDTO>> GetAllMatchesAsync()
         {
             var live = await _external.FetchAllAsync();
             foreach (var m in live)
@@ -25,7 +26,24 @@ namespace FumbleFunds.Api.Services
                 else
                     await _matchesRepository.UpdateMatchAsync(m);
             }
-            return await _matchesRepository.GetAllMatchesAsync();
+            var matches= await _matchesRepository.GetAllMatchesAsync();
+            var dtos = new List<ReturnedMatchDTO>();
+            foreach (var match in matches)
+            {
+                var dto = new ReturnedMatchDTO
+                {
+                    Id = match.Id,
+                    HomeTeam = match.HomeTeam,
+                    AwayTeam = match.AwayTeam,
+                    StartTime = match.StartTime,
+                    HomeScore = match.HomeScore,
+                    AwayScore = match.AwayScore,
+                    Status = match.Status
+                };
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
         public async Task<Match?> GetMatchByIdAsync(int matchId)
         {
@@ -39,10 +57,27 @@ namespace FumbleFunds.Api.Services
             return live;
         }
 
-        public Task<IEnumerable<Match>> GetPopularMatchesAsync(int count)
+        public async Task<IEnumerable<ReturnedMatchDTO>> GetPopularMatchesAsync(int count)
         {
 
-            return _matchesRepository.GetPopularMatchesAsync(count);
+            var matches = await _matchesRepository.GetPopularMatchesAsync(count);
+            var dtos = new List<ReturnedMatchDTO>();
+            foreach (var match in matches)
+            {
+                var dto = new ReturnedMatchDTO
+                {
+                    Id = match.Id,
+                    HomeTeam = match.HomeTeam,
+                    AwayTeam = match.AwayTeam,
+                    StartTime = match.StartTime,
+                    HomeScore = match.HomeScore,
+                    AwayScore = match.AwayScore,
+                    Status = match.Status
+                };
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
 
         public Task<Match> CreateMatchAsync(Match match)
