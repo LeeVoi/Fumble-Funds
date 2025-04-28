@@ -17,7 +17,7 @@ export const getMatches = async (): Promise<Match[]> => {
 
 export const getPopularMatches = async (count: number): Promise<Match[]> => {
     try {
-        const requestURL = `http://localhost:8080/Matches/popular?count=${count}`; // Adjust the endpoint as needed
+        const requestURL = `http://localhost:8080/api/Matches/popular?count=${count}`; // Adjust the endpoint as needed
         const response = await axios.get(requestURL);
         return response.data;
     } catch (error) {
