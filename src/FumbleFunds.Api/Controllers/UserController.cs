@@ -1,3 +1,4 @@
+using fumble_funds.Models.Entity.DTO;
 using FumbleFunds.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -81,16 +82,19 @@ namespace FumbleFunds.Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateUserAsync([FromBody] User user)
+        public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserDTO dto)
         {
-            if (user == null)
-                return BadRequest("User cannot be null.");
+            if (dto is null)
+                return BadRequest("User payload is required.");
 
+            var user = new User
+            {
+                Username = dto.Username,
+                Email = dto.Email,
+                PasswordHash = dto.Password,
+            };
             var created = await _userService.CreateUserAsync(user);
-            if (created == null)
-                return BadRequest("Could not create user.");
-
-            return Ok(created);
+            return Ok(created.Id);
         }
     }
 }

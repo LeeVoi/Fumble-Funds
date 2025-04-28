@@ -1,5 +1,5 @@
 
-
+using fumble_funds.Models.Entity.DTO;
 using FumbleFunds.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,17 +27,23 @@ namespace FumbleFunds.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var bet = await _betService.GetBetByIdAsync(id);
-            return bet is null 
-                ? NotFound() 
+            return bet is null
+                ? NotFound()
                 : Ok(bet);
         }
 
         // POST api/bets
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] Bet bet)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateBetDto dto)
         {
-            if (bet == null)
-                return BadRequest("Bet payload is required.");
+            var bet = new Bet
+            {
+                UserId = dto.UserId,
+                MatchId = dto.MatchId,
+                Amount = dto.Amount,
+                PredictedOutcome = dto.PredictedOutcome,
+                PlacedAt = DateTime.UtcNow
+            };
 
             var created = await _betService.CreateBetAsync(bet);
             return Ok(created);

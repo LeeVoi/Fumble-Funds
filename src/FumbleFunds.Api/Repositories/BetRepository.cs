@@ -16,16 +16,12 @@ namespace FumbleFunds.Api.Repositories
         {
             return await _context.Bets
                 .Where(b => b.UserId == userId)
-                .Include(b => b.User)
-                .Include(b => b.Match)
                 .ToListAsync();
         }
 
         public Task<Bet?> GetBetByIdAsync(int betId)
         {
             return _context.Bets
-        .Include(b => b.User)
-        .Include(b => b.Match)
         .FirstOrDefaultAsync(b => b.Id == betId);
         }
 
