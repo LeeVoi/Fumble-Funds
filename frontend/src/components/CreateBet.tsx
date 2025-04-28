@@ -12,9 +12,10 @@ interface CreateBetProps {
     loggedIn: boolean;
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     setUser: React.Dispatch<React.SetStateAction<number>>;
+    popularEnabled: boolean;
 }
 
-const CreateBet: React.FC<CreateBetProps> = ({userId, match, loggedIn, setLoggedIn, setUser}) => {
+const CreateBet: React.FC<CreateBetProps> = ({userId, match, loggedIn, setLoggedIn, setUser, popularEnabled}) => {
     const [betAmount, setBetAmount] = useState<number>();
     const [outcome, setOutcome] = useState<MatchOutcome>(MatchOutcome.HomeWin);
 
@@ -38,7 +39,7 @@ const CreateBet: React.FC<CreateBetProps> = ({userId, match, loggedIn, setLogged
 
     return (
         <div className="container">
-            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>
+            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} popularEnabled={popularEnabled}/>
             <div style={{
                 display: "flex",
                 flexDirection: "column",

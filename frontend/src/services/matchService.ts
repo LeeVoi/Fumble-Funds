@@ -14,3 +14,14 @@ export const getMatches = async (): Promise<Match[]> => {
         throw error; // Re-throw the error to handle it in the calling code
     }
 };
+
+export const getPopularMatches = async (count: number): Promise<Match[]> => {
+    try {
+        const requestURL = `${API_URL}/Matches/popular?count=${count}`; // Adjust the endpoint as needed
+        const response = await axios.get(requestURL);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching popular matches:", error);
+        throw error; // Re-throw the error to handle it in the calling code
+    }
+}
