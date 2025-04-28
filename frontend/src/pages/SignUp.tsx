@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {signup} from "../services/userService.ts";
 import logo from "../assets/logo.png";
 
 
@@ -13,11 +14,10 @@ const SignUp: React.FC<SignUpProps> = ({setUser, setLoggedIn}) => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleLoginClick = () =>{
-        console.log(email);
-        console.log(password);
+    const handleSignupClick = async () =>{
+        const response = await signup(email, password);
+        setUser(response);
         setLoggedIn(true);
-        setUser(1);
         navigate("/");
     }
 
@@ -38,7 +38,7 @@ const SignUp: React.FC<SignUpProps> = ({setUser, setLoggedIn}) => {
                 <input className="input" placeholder="email" onChange={(e) => setEmail(e.target.value)}></input>
                 <label className="input-label">Password</label>
                 <input className="input" placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)}></input>
-                <button className="login-button" disabled={!email.trim() || !password.trim()} onClick={handleLoginClick}>Sign Up</button>
+                <button className="login-button" disabled={!email.trim() || !password.trim()} onClick={handleSignupClick}>Sign Up</button>
                 <p>
                    Already have an account?{" "}
                     <span className="signup-link" onClick={handleSignup}>Log in here!</span>
