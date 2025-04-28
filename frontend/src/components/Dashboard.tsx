@@ -11,10 +11,11 @@ interface DashboardProps{
     loggedIn: boolean;
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     setUser: React.Dispatch<React.SetStateAction<number>>;
+    popularEnabled: boolean;
 }
 
 
-const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, matches, loggedIn, setLoggedIn, setUser}: DashboardProps) => {
+const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, matches, loggedIn, setLoggedIn, setUser, popularEnabled}: DashboardProps) => {
     const navigate = useNavigate();
     
     const handleClickBet = (match: Match) => {
@@ -27,7 +28,7 @@ const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, matches, l
     
     return (
         <div className="container">
-            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>
+            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} popularEnabled={popularEnabled}/>
             <div className="dashboard-container">
                 <table className="match-table">
                     <thead>

@@ -5,9 +5,10 @@ interface NavbarProps {
     loggedIn: boolean;
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     setUser: React.Dispatch<React.SetStateAction<number>>;
+    popularEnabled: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ loggedIn, setLoggedIn, setUser }) => {
+const Navbar: React.FC<NavbarProps> = ({ loggedIn, setLoggedIn, setUser, popularEnabled }) => {
     const navigate = useNavigate();
 
     const toggleLoggedIn = () => {
@@ -18,6 +19,8 @@ const Navbar: React.FC<NavbarProps> = ({ loggedIn, setLoggedIn, setUser }) => {
             navigate("/login");
         }
     };
+    
+    
 
     return (
         <div className="navbar">
@@ -25,6 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({ loggedIn, setLoggedIn, setUser }) => {
             <div className="navbar-button-bar">
                 <button className="navbar-button" onClick={() => navigate("/")}>Dashboard</button>
                 {loggedIn && <button className="navbar-button" onClick={() => navigate("yourbets")}>Your Bets</button>}
+                {popularEnabled && <button className="navbar-button" onClick={() => navigate("/popularmatches")}>Popular Matches</button>}
             </div>
             <button className="navbar-login" onClick={toggleLoggedIn}>
                 {loggedIn ? "Logout" : "Login"}

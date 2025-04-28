@@ -11,9 +11,11 @@ interface YourBetsProps {
     setUser: React.Dispatch<React.SetStateAction<number>>;
     matches: Match[];
     user: number;
+    popularEnabled: boolean;
+
 }
 
-const YourBets: React.FC<YourBetsProps> = ({ loggedIn, setLoggedIn, setUser, matches, user }) => {
+const YourBets: React.FC<YourBetsProps> = ({ loggedIn, setLoggedIn, setUser, matches, user, popularEnabled }) => {
     const [bets, setBets] = useState<ReturnedBet[]>([]);
     
     const getTeamName = (type: string, bet: ReturnedBet) => {
@@ -55,7 +57,7 @@ const YourBets: React.FC<YourBetsProps> = ({ loggedIn, setLoggedIn, setUser, mat
     }, []);
     return (
         <div className="container">
-            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>
+            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} popularEnabled={popularEnabled}/>
             <div className="dashboard-container">
                 <h1>Your Bets</h1>
                 <table className="match-table">
