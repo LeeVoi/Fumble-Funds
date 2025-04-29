@@ -30,6 +30,7 @@ const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, matches, l
         <div className="container">
             <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} popularEnabled={popularEnabled}/>
             <div className="dashboard-container">
+                <h1>Games</h1>
                 <table className="match-table">
                     <thead>
                     <tr>
@@ -52,7 +53,9 @@ const Dashboard: React.FC<DashboardProps> = ({userId, handleSetMatch, matches, l
                             <td>{new Date(match.startTime).toLocaleDateString()}</td>
                             <td>{MatchStatus[match.status]}</td>
                             {userId !== -1 && <td>
-                                <button className="bet-button" onClick={() => handleClickBet(match)}>Bet</button>
+                                {match.status === MatchStatus.Scheduled ? (
+                                        <button className="bet-button" onClick={() => handleClickBet(match)}>Bet</button>) :
+                                    <span>Betting Closed</span>}
                             </td>}
                         </tr>
                     ))}

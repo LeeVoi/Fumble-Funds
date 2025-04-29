@@ -26,6 +26,7 @@ const PopularMatches: React.FC<PopularMatches> = ({ loggedIn, setLoggedIn, setUs
         <div className="container">
             <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser} popularEnabled={featureEnabled}/>
             <div className="dashboard-container">
+                <h1>Popular Matches</h1>
                 {
                     !featureEnabled ? (
                         <p>The "Popular Matches" feature is not enabled.</p>

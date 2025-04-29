@@ -167,9 +167,26 @@ body {
   text-align: center; /* Horizontally center text */
 }
 
-.match-table th, .match-table td {
+.match-table th {
+  background-color: var(--mint-green);
+  border: 1px solid var(--grey-green);
   padding: 10px;
   vertical-align: middle; /* Vertically center text */
-  border: 1px solid #ddd; /* Optional: Add borders for better visibility */
+}
+.match-table td{
+  padding: 10px;
+  vertical-align: middle; /* Vertically center text */
+  border: 1px solid var(--grey-green);
+}
+
+.bet-button{
+  background-color: var(--grey-green);
+    color: var(--white);
+  width: 75%;
+}
+
+.bet-button:hover {
+  background-color: var(--mint-green);
+  color: var(--black);
 }
 
